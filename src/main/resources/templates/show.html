@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<!-- HEAD -->
+<head th:replace="~{head :: head('Plan Paciente')}"></head>
+
+<body class="bg-light">
+<div class="d-flex flex-column min-vh-100">
+    <!-- HEADER -->
+    <div th:replace="~{header :: header('plan')}"></div>
+
+    <main class="container flex-grow-1 py-4">
+        <div class="text-center mb-4">
+            <h1 class="mb-0">
+                <span class="fw-bold text-warning">Farmacia:</span>
+                <span class="fw-bold text-primary" th:text="${farmaciaActiva != null ? farmaciaActiva.nombre : 'Sin farmacia asignada'}">
+                    La Bomba San Pedro
+                </span>
+            </h1>
+        </div>
+        <div class="mx-auto" style="max-width: 760px;">
+            <div th:if="${mensaje}" class="alert alert-success py-2 mb-3 text-center" th:text="${mensaje}"></div>
+            <div th:if="${error}" class="alert alert-danger py-2 mb-3 text-center" th:text="${error}"></div>
+            <section class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <form method="get" th:action="@{/presentation/plan/show}" class="row g-2 align-items-center">
+                        <div class="col-md-2 text-md-end fw-bold text-warning">Paciente: </div>
+                        <div class="col-md-4">
+                            <input type="text" name="pacienteId" th:value="${pacienteId}" maxlength="20"
+                                   class="form-control form-control-sm" required>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-outline-dark btn-sm w-100">Buscar</button>
+                        </div>
+                        <div class="col-md-4 fw-bold text-primary" th:text="${pacienteNombre}">No se ha seleccionado un paciente</div>
+                    </form>
+                </div>
+            </section>
+            <section class="card shadow-sm" th:if="${!#lists.isEmpty(medicamentosPaciente)}">
+                <div class="card-body">
+                    <form method="post" th:action="@{/presentation/plan/medicamento/procesar}"
+                          class="row g-2 align-items-center">
+                        <input type="hidden" name="pacienteId" th:value="${pacienteId}">
+                        <div class="col-md-3 text-md-end fw-bold text-warning">Medicamento:</div>
+                        <div class="col-md-5">
+                            <select name="medicamentoId" class="form-select form-select-sm" required>
+                                <option th:each="pm : ${medicamentosPaciente}"
+                                        th:value="${pm.medicamento.id}"
+                                        th:text="${pm.medicamento.nombre + ' (' + pm.medicamento.plan + '+1) [' + pmService.calcularRegalias(pm) + ']'}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 text-md-end fw-bold text-warning">Cantidad de Dosis:</div>
+                        <div class="col-md-2">
+                            <input type="number" name="cantidad" min="1" value="1" class="form-control form-control-sm" required>
+                        </div>
+                        <div class="col-md-3 offset-md-3">
+                            <button type="submit" name="accion" value="REGISTRAR" class="btn btn-outline-primary btn-sm w-100">Registrar</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" name="accion" value="ENTREGAR" class="btn btn-outline-success btn-sm w-100">Entregar</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <div th:replace="~{footer :: footer}"></div>
+
+</div>
+</body>
+</html>

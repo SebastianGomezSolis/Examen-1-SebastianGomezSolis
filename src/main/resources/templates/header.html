@@ -1,0 +1,17 @@
+<div th:fragment="header(activa)">
+    <header class="py-4 text-center bg-white">
+        <img th:src="@{/images/header.jpg}" alt="Header" class="img-fluid" style="max-width: 360px;">
+    </header>
+    <nav class="bg-primary text-white py-2">
+        <div class="container text-center small">
+            <div th:if="${usuarioActivo == null}">
+                INGRESO
+            </div>
+            <div th:if="${usuarioActivo != null}">
+                <span th:text="${usuarioActivo}">USUARIO</span>
+                <span class="mx-2">|</span>
+                <a th:href="@{/logout}" class="link-light text-decoration-none">LOGOUT</a>
+            </div>
+        </div>
+    </nav>
+</div>

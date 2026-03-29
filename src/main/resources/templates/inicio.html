@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{head :: head('Ingreso')}"></head>
+
+<body class="bg-light">
+<div class="d-flex flex-column min-vh-100">
+
+    <div th:replace="~{header :: header('inicio')}"></div>
+
+    <main class="container flex-grow-1 d-flex align-items-center justify-content-center py-5">
+        <section class="card shadow-sm border-secondary-subtle text-center p-4" style="width: 100%; max-width: 340px;">
+            <div class="mb-3">
+                <img th:src="@{/images/login.png}" alt="Login" width="92">
+            </div>
+
+            <div th:if="${error}" class="alert alert-danger py-2 small" th:text="${error}"></div>
+
+            <form th:action="@{/ingresar}" method="post" class="mx-auto" style="max-width: 220px;">
+                <div class="row align-items-center mb-2">
+                    <div class="col-4 text-end fw-bold text-warning">Id</div>
+                    <div class="col-8">
+                        <input type="text" name="id" maxlength="10" class="form-control form-control-sm" required>
+                    </div>
+                </div>
+
+                <div class="row align-items-center mb-3">
+                    <div class="col-4 text-end fw-bold text-warning">Clave</div>
+                    <div class="col-8">
+                        <input type="password" name="clave" class="form-control form-control-sm" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-outline-primary btn-sm px-3">Ingresar</button>
+            </form>
+        </section>
+    </main>
+
+    <div th:replace="~{footer :: footer}"></div>
+</div>
+</body>
+</html>
