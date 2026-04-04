@@ -13,7 +13,7 @@
 	<groupId>una.sistema</groupId>
 	<artifactId>Examen-1-SebastianGomezSolis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>Examen-1-SebastianGomezSolis</name>
 	<description>Examen-1-SebastianGomezSolis</description>
 
